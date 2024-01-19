@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { FaStar } from "react-icons/fa";
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, onEdit, onDelete }) => {
   return (
     <>
       <div className="overflow-auto">
@@ -61,8 +61,18 @@ const TaskList = ({ tasks }) => {
                 <td className="text-center">{task.priority}</td>
                 <td>
                   <div className="flex items-center justify-center space-x-3">
-                    <button className="text-red-500">Delete</button>
-                    <button className="text-blue-500">Edit</button>
+                    <button
+                      className="text-red-500"
+                      onClick={() => onDelete(task)}
+                    >
+                      Delete
+                    </button>
+                    <button
+                      className="text-blue-500"
+                      onClick={() => onEdit(task)}
+                    >
+                      Edit
+                    </button>
                   </div>
                 </td>
               </tr>
