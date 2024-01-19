@@ -39,7 +39,14 @@ const TaskBoard = () => {
     // console.log(task);
     setShowAddTask(true);
   }
-  function handleDeleteTask() {}
+  function handleDeleteTask(taskId) {
+    const afterDeleteTask = tasks.filter((task) => task.id !== taskId);
+    setTasks(afterDeleteTask);
+  }
+  function handleDeleteAll() {
+    tasks.length = 0;
+    setTasks([...tasks]);
+  }
   function closeTaskBoard() {
     setShowAddTask(false);
     setUpdateToTask(null);
@@ -63,7 +70,10 @@ const TaskBoard = () => {
           </div>
           {/* <!-- Search Box Ends --> */}
           <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
-            <TaskAction onAddTask={() => setShowAddTask(true)} />
+            <TaskAction
+              onAddTask={() => setShowAddTask(true)}
+              onDeleteAll={handleDeleteAll}
+            />
             <TaskList
               tasks={tasks}
               onEdit={handleUpdateTask}

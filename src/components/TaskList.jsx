@@ -63,7 +63,7 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
                   <div className="flex items-center justify-center space-x-3">
                     <button
                       className="text-red-500"
-                      onClick={() => onDelete(task)}
+                      onClick={() => onDelete(task.id)}
                     >
                       Delete
                     </button>
