@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { FaStar } from "react-icons/fa";
-const TaskList = ({ tasks, onEdit, onDelete }) => {
+const TaskList = ({ tasks, onEdit, onDelete, onFav }) => {
   return (
     <>
       <div className="overflow-auto">
@@ -37,11 +37,13 @@ const TaskList = ({ tasks, onEdit, onDelete }) => {
                 key={task.id}
               >
                 <td>
-                  {task.isFavourite ? (
-                    <FaStar className="fill-yellow-500" />
-                  ) : (
-                    <FaStar />
-                  )}
+                  <button onClick={() => onFav(task.id)}>
+                    {task.isFavourite ? (
+                      <FaStar className="fill-yellow-500" />
+                    ) : (
+                      <FaStar />
+                    )}
+                  </button>
                 </td>
                 <td>{task.title}</td>
                 <td>

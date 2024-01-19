@@ -1,4 +1,12 @@
-const SearchBox = () => {
+import { useState } from "react";
+
+// eslint-disable-next-line react/prop-types
+const SearchBox = ({ onSearch }) => {
+  const [search, setSearch] = useState("");
+  function handleClick(event) {
+    event.preventDefault();
+    onSearch(search);
+  }
   return (
     <>
       <div className="p-2  flex justify-end">
@@ -11,10 +19,13 @@ const SearchBox = () => {
                 className="z-20 block w-full bg-gray-800 px-4 py-2 pr-10 focus:outline-none"
                 placeholder="Search Task"
                 required
+                value={search}
+                onChange={() => setSearch(event.target.value)}
               />
               <button
                 type="submit"
                 className="absolute right-2 top-0 h-full rounded-e-lg text-white md:right-4"
+                onClick={handleClick}
               >
                 <svg
                   className="h-4 w-4"

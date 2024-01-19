@@ -2,6 +2,7 @@ import { useState } from "react";
 import SearchBox from "../components/SearchBox";
 import TaskList from "../components/TaskList";
 import AddTaskModel from "./AddTaskModel";
+import NoTaskFound from "./NoTaskFound";
 import TaskAction from "./TaskAction";
 
 const TaskBoard = () => {
@@ -47,11 +48,28 @@ const TaskBoard = () => {
     tasks.length = 0;
     setTasks([...tasks]);
   }
+  function handleFavourite(taskId) {
+    const taskIndex = tasks.findIndex((task) => task.id === taskId);
+    const newTask = [...tasks];
+    newTask[taskIndex].isFavourite = !newTask[taskIndex].isFavourite;
+    setTasks(newTask);
+  }
   function closeTaskBoard() {
     setShowAddTask(false);
     setUpdateToTask(null);
   }
-  // console.log(updateToTask);
+  function handleSearch(search) {
+    console.log(search);
+    let taskslist = [...tasks];
+    if (search) {
+      let searchList = tasks.filter((task) =>
+        task.title.toLowerCase().includes(search.toLowerCase())
+      );
+      setTasks([...searchList]);
+    } else {
+      setTasks([...taskslist]);
+    }
+  }
 
   return (
     <>
@@ -66,7 +84,7 @@ const TaskBoard = () => {
           )}
           {/* <!-- Search Box --> */}
           <div className="p-2 flex justify-end">
-            <SearchBox />
+            <SearchBox onSearch={handleSearch} />
           </div>
           {/* <!-- Search Box Ends --> */}
           <div className="rounded-xl border border-[rgba(206,206,206,0.12)] bg-[#1D212B] px-6 py-8 md:px-9 md:py-16">
@@ -74,11 +92,16 @@ const TaskBoard = () => {
               onAddTask={() => setShowAddTask(true)}
               onDeleteAll={handleDeleteAll}
             />
-            <TaskList
-              tasks={tasks}
-              onEdit={handleUpdateTask}
-              onDelete={handleDeleteTask}
-            />
+            {tasks.length > 0 ? (
+              <TaskList
+                tasks={tasks}
+                onEdit={handleUpdateTask}
+                onDelete={handleDeleteTask}
+                onFav={handleFavourite}
+              />
+            ) : (
+              <NoTaskFound />
+            )}
           </div>
         </div>
       </section>
